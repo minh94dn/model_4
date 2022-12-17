@@ -12,5 +12,6 @@
     <title>$Title$</title>
   </head>
   <body>
+  <c:redirect url="/converter/"></c:redirect>
   </body>
 </html>

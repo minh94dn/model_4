@@ -43,6 +43,8 @@ public class Caculator {
                     model.addAttribute("result", "Result is: " + result);
                     break;
                 }
+            default:
+                throw new RuntimeException("Không có phép tình này.");
         }
         model.addAttribute("calculation", calculation);
 

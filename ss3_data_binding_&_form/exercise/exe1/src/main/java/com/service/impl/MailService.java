@@ -8,7 +8,8 @@ import com.service.IMailService;
 import java.util.List;
 
 public class MailService implements IMailService {
-private IMailRepository iMailRepository = new MailRepository();
+    private IMailRepository iMailRepository = new MailRepository();
+
     @Override
     public List<Mail> showAll() {
         return iMailRepository.showAll();
@@ -33,6 +34,4 @@ private IMailRepository iMailRepository = new MailRepository();
     public void update(Mail mail) {
         iMailRepository.update(mail);
     }
-
-
 }

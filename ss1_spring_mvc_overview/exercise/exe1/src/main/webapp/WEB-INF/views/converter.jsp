@@ -12,7 +12,7 @@
 </head>
 <body>
 <h1>Convert from USD to VND</h1>
-<form action="/converter/result">
+<form action="/converter/result" method="post">
     <p>USD</p>
     <input name="usd" value="${usd}">
     <p>Tỉ Giá</p>
