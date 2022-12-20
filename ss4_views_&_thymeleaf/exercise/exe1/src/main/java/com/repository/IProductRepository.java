@@ -13,7 +13,7 @@ public interface IProductRepository {
 
     List<Product> add(Product product);
 
-    boolean delete(int id);
+    void delete(int id);
 
     List<Product> search(String name);
 }

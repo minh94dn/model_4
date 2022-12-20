@@ -58,4 +58,12 @@ public class ProductController {
         model.addAttribute("productList", productList);
         return "/list";
     }
+    @GetMapping("/delete/{id}")
+    public String remove(Model model, @PathVariable("id") int id, Product product){
+        iProductService.delete(id);
+        List<Product> productList = iProductService.showAll();
+        model.addAttribute("productList", productList);
+        model.addAttribute("massage", "Xóa thành công !");
+        return "/list";
+    }
 }
