@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List Product</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css"/>
+</head>
+<body>
+
+<h1 style="text-align: center; margin: 10px auto">List Product</h1>
+<p th:text="${message}" style="text-align: center; color: red; font-size: 25px"></p>
+<a th:href="@{/product/add}">
+    <button class="btn btn-outline-primary">Add Product</button>
+</a>
+<div class="row mt-2">
+    <div class="col-lg-12 d-flex justify-content-center align-items-center">
+        <form class="d-flex" action="/product/search">
+            <input class="form-control me-2" name="name" type="search" placeholder="Search name" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+    </div>
+</div>
+<table class="table table-striped mt-5">
+    <tr>
+        <th>STT</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Company</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <tr th:each="product, status : ${productList}">
+        <td th:text="${status.count}"></td>
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.price}"></td>
+        <td th:text="${product.description}"></td>
+        <td th:text="${product.company}"></td>
+        <td>
+            <a th:href="@{/product/edit/__${product.id}__}">
+                <button class="btn btn-outline-primary">Edit</button>
+            </a>
+        </td>
+        <td>
+            <button th:onclick="|infoDelete('${product.id}', '${product.name}')|" type="button"
+                    class="btn btn-outline-danger"
+                    data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Delete
+            </button>
+        </td>
+    </tr>
+</table>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/product/delete" method="post">
+                <div class="modal-body">
+                    <input hidden id="deleteId" name="deleteId" type="text">
+                    <span>do you want to delete the customer named </span><span id="deleteName"
+                                                                                style="color: red"></span><span> ?</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function infoDelete(id, name) {
+        document.getElementById("deleteId").value = id;
+        document.getElementById("deleteName").innerText = name;
+    }
+</script>
+<script src="../bootstrap/js/bootstrap.js"></script>
+
+</body>
+</html>
