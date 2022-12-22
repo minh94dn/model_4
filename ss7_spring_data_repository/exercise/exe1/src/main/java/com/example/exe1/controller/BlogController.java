@@ -76,10 +76,10 @@ public class BlogController {
     }
 
     @GetMapping("/search")
-    private String search(@RequestParam(name = "search", defaultValue = "") String search, Model model, Pageable pageable) {
-        Page<Blog> blogList = iBlogService.findByTitleContaining(search, pageable);
+    private String search(@RequestParam(name = "search", defaultValue = "") String title, Model model, Pageable pageable) {
+        Page<Blog> blogList = iBlogService.findByTitleContaining(title, pageable);
         model.addAttribute("blogList", blogList);
-        model.addAttribute("search", search);
+        model.addAttribute("search", title);
         return "/blog/list";
     }
 }
