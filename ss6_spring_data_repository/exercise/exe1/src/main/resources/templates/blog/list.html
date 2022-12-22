@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List Blog</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css"/>
+</head>
+<body>
+
+<h1 style="text-align: center; margin: 10px auto">List Blog</h1>
+<p th:text="${mess}" style="text-align: center; color: red; font-size: 25px"></p>
+<a th:href="@{/add}">
+    <button class="btn btn-outline-primary">Add Blog</button>
+</a>
+
+<table border="1">
+    <tr>
+        <th>STT</th>
+        <th>Title</th>
+        <th>Writer</th>
+        <th>Content</th>
+        <th>DateCreated</th>
+        <th>Category</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <tr th:each="blog, status : ${blogList}">
+        <td th:text="${status.count}"></td>
+        <td th:text="${blog.title}"></td>
+        <td th:text="${blog.writer}"></td>
+        <td th:text="${blog.content}"></td>
+        <td th:text="${blog.dateCreated}"></td>
+        <td th:text="${blog.category}"></td>
+        <td>
+            <a th:href="@{/edit/__${blog.id}__}">
+                <button class="btn btn-outline-primary">Edit</button>
+            </a>
+        </td>
+        <td>
+            <a th:href="@{/delete/__${blog.id}__}">
+                <button class="btn btn-outline-primary">Delete</button>
+            </a>
+        </td>
+    </tr>
+</table>
+<script src="../bootstrap/js/bootstrap.js"></script>
+</body>
+</html>
