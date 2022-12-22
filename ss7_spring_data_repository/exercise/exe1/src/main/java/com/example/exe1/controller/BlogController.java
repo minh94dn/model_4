@@ -4,7 +4,6 @@ import com.example.exe1.model.Blog;
 import com.example.exe1.model.Category;
 import com.example.exe1.service.IBlogService;
 import com.example.exe1.service.ICategoryService;
-import com.example.exe1.service.impl.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,14 +24,14 @@ public class BlogController {
     private ICategoryService iCategoryService;
 
     @GetMapping("")
-    public String showListBlog(Model model) {
-        List<Blog> blogList = iBlogService.findAll();
+    public String showListBlog(Model model, @RequestParam(name = "search", defaultValue = "") String title, @PageableDefault(size = 3) Pageable pageable) {
+        Page<Blog> blogList = iBlogService.findByTitleContaining(title, pageable);
         model.addAttribute("blogList", blogList);
         return "/blog/list";
     }
 
     @GetMapping("/add")
-    public String showListAdd(Model model) {
+    public String showFormAdd(Model model) {
         List<Category> categoryList = iCategoryService.findAll();
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("blog", new Blog());
@@ -63,7 +62,7 @@ public class BlogController {
         model.addAttribute("categoryList", categoryList);
         Optional<Blog> blog = iBlogService.findById(id);
         model.addAttribute("blog", blog);
-        return "/blog/edit";
+        return "blog/edit";
     }
 
     @PostMapping("/edit")
@@ -72,7 +71,7 @@ public class BlogController {
         List<Blog> blogList = iBlogService.findAll();
         model.addAttribute("blogList", blogList);
         model.addAttribute("mess", "Chỉnh sửa thành công");
-        return "/blog/list";
+        return "blog/list";
     }
 
     @GetMapping("/search")
