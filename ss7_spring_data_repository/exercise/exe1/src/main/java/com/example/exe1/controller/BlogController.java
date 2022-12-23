@@ -11,6 +11,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,21 +40,21 @@ public class BlogController {
     }
 
     @PostMapping("/save")
-    public String save(Model model, Blog blog) {
+    public String save(Model model, Blog blog, RedirectAttributes redirectAttributes) {
         iBlogService.save(blog);
         List<Blog> blogList = iBlogService.findAll();
         model.addAttribute("blogList", blogList);
         model.addAttribute("mess", "Thêm mới thành công");
-        return "/blog/list";
+        return "redirect:/blog";
     }
 
     @GetMapping("/delete/{id}")
-    public String remove(@PathVariable("id") int id, Model model) {
+    public String remove(@PathVariable("id") int id, Model model, RedirectAttributes redirectAttributes) {
         iBlogService.deleteById(id);
         List<Blog> blogList = iBlogService.findAll();
         model.addAttribute("blogList", blogList);
         model.addAttribute("mess", "Xóa thành công");
-        return "/blog/list";
+        return "redirect:/blog";
     }
 
     @GetMapping("/edit/{id}")
@@ -62,16 +63,16 @@ public class BlogController {
         model.addAttribute("categoryList", categoryList);
         Optional<Blog> blog = iBlogService.findById(id);
         model.addAttribute("blog", blog);
-        return "blog/edit";
+        return "/blog/edit";
     }
 
     @PostMapping("/edit")
-    public String update(Model model, @ModelAttribute("blog") Blog blog){
+    public String update(Model model, @ModelAttribute("blog") Blog blog, RedirectAttributes redirectAttributes){
         iBlogService.save(blog);
         List<Blog> blogList = iBlogService.findAll();
         model.addAttribute("blogList", blogList);
         model.addAttribute("mess", "Chỉnh sửa thành công");
-        return "blog/list";
+        return "redirect:/blog";
     }
 
     @GetMapping("/search")
