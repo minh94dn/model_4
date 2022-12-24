@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<style>
+    p{
+        color: red;
+    }
+</style>
+</head>
+<body>
+<h1>Form đăng ký người dùng</h1>
+
+<form  action="/user/create" method="post" th:object="${userDto}">
+    <div>
+        <label th:for="firstName">First Name: </label>
+        <input th:field="*{firstName}" type="text">
+        <p th:errors="*{firstName}"></p>
+    </div>
+    <div>
+        <label th:for="lastName">Last Name: </label>
+        <input  th:field="*{lastName}" type="text" style="margin-top: 20px">
+        <p th:errors="*{lastName}"></p>
+    </div>
+    <div>
+        <label th:for="phoneNumber">Phone Number: </label>
+        <input th:field="*{phoneNumber}" type="text" style="margin-top: 20px">
+        <p th:errors="*{phoneNumber}" </p>
+    </div>
+    <div>
+        <label th:for="age">Age: </label>
+        <input th:field="*{age}" type="text" style="margin-top: 20px">
+        <p th:errors="*{age}" ></p>
+    </div>
+    <div>
+        <label th:for="email">Email: </label>
+        <input th:field="*{email}" type="text" style="margin-top: 20px">
+        <p th:errors="*{email}"></p>
+    </div>
+    <input type="submit" value="Save" style="margin-top: 20px">
+</form>
+
+</body>
+</html>
