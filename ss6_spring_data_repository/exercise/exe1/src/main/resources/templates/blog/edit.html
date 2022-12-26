@@ -6,9 +6,9 @@
 </head>
 <body>
 <h1>Edit Blog</h1>
-<form action="/edit" method="post" th:object="${blog}">
+<form action="/blog/edit" method="post" th:object="${blog}">
     <input type="hidden" th:field="*{id}">
-    <label th:for="name">Name</label>
+    <label th:for="title">Title</label>
     <input type="text" th:field="*{title}">
     <label th:for="price">Price</label>
     <input type="text" th:field="*{writer}">

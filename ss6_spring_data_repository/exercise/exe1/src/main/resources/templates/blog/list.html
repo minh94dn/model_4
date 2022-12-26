@@ -10,7 +10,7 @@
 
 <h1 style="text-align: center; margin: 10px auto">List Blog</h1>
 <p th:text="${mess}" style="text-align: center; color: red; font-size: 25px"></p>
-<a th:href="@{/add}">
+<a th:href="@{/blog/add}">
     <button class="btn btn-outline-primary">Add Blog</button>
 </a>
 <table class="table table-striped mt-3">
@@ -32,12 +32,12 @@
         <td th:text="${blog.dateCreated}"></td>
         <td th:text="${blog.category}"></td>
         <td>
-            <a th:href="@{/edit/__${blog.id}__}">
+            <a th:href="@{/blog/edit/__${blog.id}__}">
                 <button class="btn btn-outline-primary">Edit</button>
             </a>
         </td>
         <td>
-            <a th:href="@{/delete/__${blog.id}__}">
+            <a th:href="@{/blog/delete/__${blog.id}__}">
                 <button class="btn btn-outline-danger">Delete</button>
             </a>
         </td>

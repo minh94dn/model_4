@@ -40,11 +40,13 @@ public class BlogController {
     }
 
     @PostMapping("/save")
-    public String save(Model model, Blog blog, RedirectAttributes redirectAttributes) {
-        iBlogService.save(blog);
-        List<Blog> blogList = iBlogService.findAll();
-        model.addAttribute("blogList", blogList);
-        model.addAttribute("mess", "Thêm mới thành công");
+    public String save(Blog blog, RedirectAttributes redirectAttributes) {
+        boolean check = iBlogService.add(blog);
+        String mess = "Thêm mới thành công";
+        if (!check) {
+            mess = "Title này đã tồn tại";
+        }
+        redirectAttributes.addFlashAttribute("mess", mess);
         return "redirect:/blog";
     }
 
@@ -58,7 +60,7 @@ public class BlogController {
     }
 
     @GetMapping("/edit/{id}")
-        public String showFormEdit(@PathVariable("id") int id, Model model){
+    public String showFormEdit(@PathVariable("id") int id, Model model) {
         List<Category> categoryList = iCategoryService.findAll();
         model.addAttribute("categoryList", categoryList);
         Optional<Blog> blog = iBlogService.findById(id);
@@ -67,11 +69,13 @@ public class BlogController {
     }
 
     @PostMapping("/edit")
-    public String update(Model model, @ModelAttribute("blog") Blog blog, RedirectAttributes redirectAttributes){
-        iBlogService.save(blog);
-        List<Blog> blogList = iBlogService.findAll();
-        model.addAttribute("blogList", blogList);
-        model.addAttribute("mess", "Chỉnh sửa thành công");
+    public String update(@ModelAttribute("blog") Blog blog, RedirectAttributes redirectAttributes) {
+        boolean check = iBlogService.edit(blog);
+        String mess = "Chỉnh sửa thành công";
+        if (!check) {
+            mess = "Title này đã tồn tại";
+        }
+        redirectAttributes.addFlashAttribute("mess", mess);
         return "redirect:/blog";
     }
 
