@@ -1,6 +1,7 @@
 package com.model.customer;
 
 import com.model.contract.Contract;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import java.util.Set;

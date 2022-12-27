@@ -1,5 +1,6 @@
 package com.model.employee;
 import com.model.contract.Contract;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -10,8 +11,11 @@ public class Employee {
     private int id;
     private String name;
     private String dateOfBirth;
+    @UniqueElements
     private String idCard;
+    @UniqueElements
     private double salary;
+    @UniqueElements
     private String phoneNumber;
     private String email;
     private String address;
