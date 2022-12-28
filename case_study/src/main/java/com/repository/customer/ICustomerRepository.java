@@ -1,4 +1,4 @@
-package com.repository;
+package com.repository.customer;
 
 import com.model.customer.Customer;
 import org.springframework.data.domain.Page;

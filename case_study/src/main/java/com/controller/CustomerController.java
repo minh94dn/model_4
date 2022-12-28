@@ -2,8 +2,8 @@ package com.controller;
 
 import com.model.customer.Customer;
 import com.model.customer.CustomerType;
-import com.service.ICustomerService;
-import com.service.ICustomerTypeService;
+import com.service.customer.ICustomerService;
+import com.service.customer.ICustomerTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

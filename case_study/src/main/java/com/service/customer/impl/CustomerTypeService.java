@@ -1,8 +1,8 @@
-package com.service.impl;
+package com.service.customer.impl;
 
 import com.model.customer.CustomerType;
-import com.repository.ICustomerTypeRepository;
-import com.service.ICustomerTypeService;
+import com.repository.customer.ICustomerTypeRepository;
+import com.service.customer.ICustomerTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
