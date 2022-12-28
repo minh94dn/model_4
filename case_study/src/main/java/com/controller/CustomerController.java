@@ -29,7 +29,7 @@ public class CustomerController {
                                    @RequestParam(defaultValue = "") String email,
                                    @RequestParam(defaultValue = "") String customerType,
                                    @PageableDefault(value = 5) Pageable pageable, Model model) {
-        Page<Customer> customerList = iCustomerService.findByAll(name,email,customerType,pageable);
+        Page<Customer> customerList = iCustomerService.findByAll(name, email, customerType, pageable);
         model.addAttribute("customerList", customerList);
         model.addAttribute("customerTypeList", iCustomerTypeService.findAll());
         return "customer/list";
@@ -67,23 +67,9 @@ public class CustomerController {
     }
 
     @PostMapping("/update")
-    public String update(Customer customer, RedirectAttributes redirectAttributes){
+    public String update(Customer customer, RedirectAttributes redirectAttributes) {
         iCustomerService.edit(customer);
         redirectAttributes.addFlashAttribute("mess", "Chỉnh sửa thành công");
         return "redirect:/customer";
     }
-
-//    @GetMapping("/search")
-//    public String findByAll(@RequestParam(name = "name", defaultValue = "") String name,
-//                            @RequestParam(name = "email", defaultValue = "") String email,
-//                            @RequestParam(name = "customerType", defaultValue = "") String customerType,
-//                            Pageable pageable, Model model){
-//        Page<Customer> customers = iCustomerService.findByAll(name,email,customerType, pageable);
-//        model.addAttribute("customers", customers);
-//        model.addAttribute("customerTypeList", iCustomerTypeService.findAll());
-//        model.addAttribute("nameSearch", name);
-//        model.addAttribute("emailSearch", email);
-//        model.addAttribute("customerTypeSearch", customerType);
-//        return "customer/list";
-//    }
 }
