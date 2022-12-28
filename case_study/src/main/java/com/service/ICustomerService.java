@@ -1,14 +1,14 @@
 package com.service;
 
 import com.model.customer.Customer;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface ICustomerService {
     List<Customer> findAll();
-
-//    List<Customer> display();
 
     void add(Customer customer);
 
@@ -17,4 +17,6 @@ public interface ICustomerService {
     Optional<Customer> findById(int id);
 
     void deleteById(int id);
+
+    Page<Customer> findByAll(String name, String email, String customerType, Pageable pageable);
 }

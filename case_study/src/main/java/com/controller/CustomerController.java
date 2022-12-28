@@ -5,12 +5,12 @@ import com.model.customer.CustomerType;
 import com.service.ICustomerService;
 import com.service.ICustomerTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -25,9 +25,13 @@ public class CustomerController {
     private ICustomerTypeService iCustomerTypeService;
 
     @RequestMapping("")
-    public String showListCustomer(Model model) {
-        List<Customer> customerList = iCustomerService.findAll();
+    public String showListCustomer(@RequestParam(defaultValue = "") String name,
+                                   @RequestParam(defaultValue = "") String email,
+                                   @RequestParam(defaultValue = "") String customerType,
+                                   @PageableDefault(value = 5) Pageable pageable, Model model) {
+        Page<Customer> customerList = iCustomerService.findByAll(name,email,customerType,pageable);
         model.addAttribute("customerList", customerList);
+        model.addAttribute("customerTypeList", iCustomerTypeService.findAll());
         return "customer/list";
     }
 
@@ -46,8 +50,8 @@ public class CustomerController {
         return "redirect:/customer";
     }
 
-    @GetMapping("/delete/{id}")
-    public String remove(@PathVariable("id") int id, RedirectAttributes redirectAttributes) {
+    @PostMapping("/delete")
+    public String remove(@RequestParam("deleteId") int id, RedirectAttributes redirectAttributes) {
         iCustomerService.deleteById(id);
         redirectAttributes.addFlashAttribute("mess", "Xóa thành công");
         return "redirect:/customer";
@@ -68,4 +72,18 @@ public class CustomerController {
         redirectAttributes.addFlashAttribute("mess", "Chỉnh sửa thành công");
         return "redirect:/customer";
     }
+
+//    @GetMapping("/search")
+//    public String findByAll(@RequestParam(name = "name", defaultValue = "") String name,
+//                            @RequestParam(name = "email", defaultValue = "") String email,
+//                            @RequestParam(name = "customerType", defaultValue = "") String customerType,
+//                            Pageable pageable, Model model){
+//        Page<Customer> customers = iCustomerService.findByAll(name,email,customerType, pageable);
+//        model.addAttribute("customers", customers);
+//        model.addAttribute("customerTypeList", iCustomerTypeService.findAll());
+//        model.addAttribute("nameSearch", name);
+//        model.addAttribute("emailSearch", email);
+//        model.addAttribute("customerTypeSearch", customerType);
+//        return "customer/list";
+//    }
 }

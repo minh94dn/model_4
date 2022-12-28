@@ -7,20 +7,23 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
-
+<div class="insert" th:insert="~{/layout::header}"></div>
 <h1 style="text-align: center; margin: 10px auto">List Customer</h1>
 <div class="row mt-2">
     <div class="col-lg-12 d-flex justify-content-center align-items-center">
-        <form class="d-flex" action="/customer/search">
-            <input class="form-control me-2" name="search" type="search" placeholder="Search name" aria-label="Search">
+        <form class="d-flex">
+            <input class="form-control me-2" name="name" type="search" placeholder="Search name" aria-label="Search">
+            <input class="form-control me-2" name="email" type="search" placeholder="Search email" aria-label="Search">
+            <input class="form-control me-2" name="customerType" type="search" placeholder="Search customer type"
+                   aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
     </div>
 </div>
 <p th:text="${mess}" style="text-align: center; color: red; font-size: 25px"></p>
-<a th:href="@{/customer/add}">
-    <button class="btn btn-outline-primary">Add Customer</button>
-</a>
+<!--<a th:href="@{/customer/add}">-->
+<!--    <button class="btn btn-outline-primary">Add Customer</button>-->
+<!--</a>-->
 <table class="table table-striped mt-3">
     <tr>
         <th>STT</th>
@@ -32,10 +35,13 @@
         <th>Email</th>
         <th>Address</th>
         <th>Customer Type</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th></th>
+        <th style="text-align: center"><a th:href="@{/customer/add}">
+            <button type="submit"><img
+                    src="https://img.icons8.com/ios/50/null/add-user-group-man-man--v1.png" width="30"/></button>
+        </a></th>
     </tr>
-    <tr th:each="customer, status : ${customerList}">
+    <tr th:each="customer, status : ${customerList.content}">
         <td th:text="${status.count}"></td>
         <td th:text="${customer.name}"></td>
         <td th:text="${customer.dateOfBirth}"></td>
@@ -51,34 +57,50 @@
             </a>
         </td>
         <td>
-            <a th:href="@{/customer/delete/__${customer.id}__}">
-                <button class="btn btn-outline-danger">Delete</button>
-            </a>
+            <button th:attr="onclick=|infoDelete('${customer.id}','${customer.name}')|" type="button"
+                    class="btn btn-outline-danger"
+                    data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Delete
+            </button>
         </td>
     </tr>
 </table>
 
-<!--<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
-<!--    <div class="modal-dialog">-->
-<!--        <div class="modal-content">-->
-<!--            <div class="modal-header">-->
-<!--                <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>-->
-<!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--            </div>-->
-<!--            <form action="/customer/delete" method="post">-->
-<!--                <div class="modal-body">-->
-<!--                    <input hidden id="deleteId" name="deleteId" type="text">-->
-<!--                    <span>do you want to delete the customer named </span><span id="deleteName"-->
-<!--                                                                                style="color: red"></span><span> ?</span>-->
-<!--                </div>-->
-<!--                <div class="modal-footer">-->
-<!--                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>-->
-<!--                    <button type="submit" class="btn btn-primary">Delete</button>-->
-<!--                </div>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
+<!--phân trang-->
+<div style="text-align: right; margin-right: 25px">
+    <a class="btn btn-secondary" th:href="@{/customer(page=${customerList.number - 1})}"
+       th:if="${customerList.hasPrevious()}">
+        Previous
+    </a>
+    <span th:text="${customerList.number + 1 + '/' + customerList.totalPages}"></span>
+    <a class="btn btn-primary" th:href="@{/customer(page=${customerList.number + 1})}"
+       th:if="${customerList.hasNext()}">
+        Next
+    </a>
+</div>
+<div class="insert" th:insert="~{/layout::footer}"></div>
+<!--xóa bằng modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/customer/delete" method="post">
+                <div class="modal-body">
+                    <input hidden id="deleteId" name="deleteId" type="text">
+                    <span>do you want to delete the customer named </span><span id="deleteName"
+                                                                                style="color: red"></span><span> ?</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <script>
     function infoDelete(id, name) {
         document.getElementById("deleteId").value = id;
