@@ -19,7 +19,7 @@
     <tr th:each="product,status : ${productList}">
         <td th:text="${status.count}"></td>
         <td th:text="${product.name}"></td>
-        <td th:text="${product.image}"></td>
+        <td><img th:src="${product.image}" style="height: 100px"></td>
         <td th:text="${product.description}"></td>
         <td th:text="${product.price}"></td>
         <td>
