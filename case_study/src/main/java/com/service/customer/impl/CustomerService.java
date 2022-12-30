@@ -22,13 +22,29 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public void add(Customer customer) {
+    public boolean add(Customer customer) {
+        for (int i = 0; i < findAll().size(); i++) {
+            if (customer.getEmail().equals(findAll().get(i).getEmail()) ||
+                    customer.getIdCard().equals(findAll().get(i).getIdCard()) ||
+                    customer.getPhoneNumber().equals(findAll().get(i).getPhoneNumber())) {
+                return false;
+            }
+        }
         iCustomerRepository.save(customer);
+        return true;
     }
 
     @Override
-    public void edit(Customer customer) {
+    public boolean edit(Customer customer) {
+        for (int i = 0; i < findAll().size(); i++) {
+            if (customer.getEmail().equals(findAll().get(i).getEmail()) ||
+                    customer.getIdCard().equals(findAll().get(i).getIdCard()) ||
+                    customer.getPhoneNumber().equals(findAll().get(i).getPhoneNumber())) {
+                return false;
+            }
+        }
         iCustomerRepository.save(customer);
+        return true;
     }
 
     @Override
@@ -43,7 +59,7 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public Page<Customer> findByAll(String name, String email, String customerType, Pageable pageable) {
-        return iCustomerRepository.findByAll(name,email,customerType, pageable );
+        return iCustomerRepository.findByAll(name, email, customerType, pageable);
     }
 
 

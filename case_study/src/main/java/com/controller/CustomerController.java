@@ -24,7 +24,7 @@ public class CustomerController {
     @Autowired
     private ICustomerTypeService iCustomerTypeService;
 
-    @RequestMapping("")
+    @GetMapping("")
     public String showListCustomer(@RequestParam(defaultValue = "") String name,
                                    @RequestParam(defaultValue = "") String email,
                                    @RequestParam(defaultValue = "") String customerType,
@@ -45,8 +45,12 @@ public class CustomerController {
 
     @PostMapping("/create")
     public String create(Customer customer, RedirectAttributes redirectAttributes) {
-        iCustomerService.add(customer);
-        redirectAttributes.addFlashAttribute("mess", "Thêm mới thành công");
+        boolean check = iCustomerService.add(customer);
+        String mess = "Thêm mới thành công.";
+        if(!check){
+            mess = "Thêm mới không thành công (ID Card hoặc Phone Number hoặc Email đã tồn tại)";
+        }
+        redirectAttributes.addFlashAttribute("mess", mess);
         return "redirect:/customer";
     }
 
@@ -68,8 +72,12 @@ public class CustomerController {
 
     @PostMapping("/update")
     public String update(Customer customer, RedirectAttributes redirectAttributes) {
-        iCustomerService.edit(customer);
-        redirectAttributes.addFlashAttribute("mess", "Chỉnh sửa thành công");
+        boolean check = iCustomerService.edit(customer);
+        String mess = "Chỉnh sửa thành công.";
+        if(!check){
+            mess = "Chỉnh sửa không thành công(ID Card hoặc Phone Number hoặc Email đã tồn tại)";
+        }
+        redirectAttributes.addFlashAttribute("mess", mess);
         return "redirect:/customer";
     }
 

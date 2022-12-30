@@ -13,8 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/facility")
 public class FacilityController {
@@ -51,8 +49,12 @@ public class FacilityController {
 
     @PostMapping("create")
     public String create(Facility facility, RedirectAttributes redirectAttributes) {
-        iFacilityService.add(facility);
-        redirectAttributes.addFlashAttribute("mess", "Thêm mới thành công.");
+        boolean check = iFacilityService.add(facility);
+        String mess = "Thêm mới thành công.";
+        if(!check){
+            mess = "Tên Facility này đã tồn tại, thêm mới không thành công";
+        }
+        redirectAttributes.addFlashAttribute("mess", mess);
         return "redirect:/facility";
     }
 
@@ -65,9 +67,13 @@ public class FacilityController {
     }
 
     @PostMapping("update")
-    public String update(Facility facility, RedirectAttributes redirectAttributes){
-        iFacilityService.edit(facility);
-        redirectAttributes.addFlashAttribute("mess", "Chỉnh sửa thành công.");
+    public String update(Facility facility, RedirectAttributes redirectAttributes) {
+        boolean check = iFacilityService.add(facility);
+        String mess = "Chỉnh sửa thành công.";
+        if(!check){
+            mess = "Tên Facility này đã tồn tại, chỉnh sửa không thành công";
+        }
+        redirectAttributes.addFlashAttribute("mess", mess);
         return "redirect:/facility";
     }
 }

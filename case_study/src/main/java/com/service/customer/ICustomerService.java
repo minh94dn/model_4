@@ -10,9 +10,9 @@ import java.util.Optional;
 public interface ICustomerService {
     List<Customer> findAll();
 
-    void add(Customer customer);
+    boolean add(Customer customer);
 
-    void edit(Customer customer);
+    boolean edit(Customer customer);
 
     Optional<Customer> findById(int id);
 
