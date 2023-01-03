@@ -43,7 +43,7 @@ public class BlogRestController {
         List<Blog> blog = iBlogService.findBlogByCategory(id);
 
         if (blog == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(blog, HttpStatus.OK);
     }
