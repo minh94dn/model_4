@@ -1,15 +1,19 @@
 package com.controller;
 
+import com.dto.CustomerDto;
 import com.model.customer.Customer;
 import com.model.customer.CustomerType;
 import com.service.customer.ICustomerService;
 import com.service.customer.ICustomerTypeService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -37,17 +41,22 @@ public class CustomerController {
 
     @GetMapping("/add")
     public String showFormAdd(Model model) {
-        List<CustomerType> customerTypeList = iCustomerTypeService.findAll();
-        model.addAttribute("customerTypeList", customerTypeList);
-        model.addAttribute("customer", new Customer());
+        model.addAttribute("customerTypeList", iCustomerTypeService.findAll());
+        model.addAttribute("customerDto", new CustomerDto());
         return "customer/add";
     }
 
     @PostMapping("/create")
-    public String create(Customer customer, RedirectAttributes redirectAttributes) {
+    public String create(@Validated CustomerDto customerDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("customerTypeList", iCustomerTypeService.findAll());
+            return "customer/add";
+        }
+        Customer customer = new Customer();
+        BeanUtils.copyProperties(customerDto, customer);
         boolean check = iCustomerService.add(customer);
         String mess = "Thêm mới thành công.";
-        if(!check){
+        if (!check) {
             mess = "Thêm mới không thành công (ID Card hoặc Phone Number hoặc Email đã tồn tại)";
         }
         redirectAttributes.addFlashAttribute("mess", mess);
@@ -63,22 +72,28 @@ public class CustomerController {
 
     @GetMapping("/edit/{id}")
     public String showFormEdit(@PathVariable("id") int id, Model model) {
-        List<CustomerType> customerTypeList = iCustomerTypeService.findAll();
-        model.addAttribute("customerTypeList", customerTypeList);
+        model.addAttribute("customerTypeList", iCustomerTypeService.findAll());
         Optional<Customer> customer = iCustomerService.findById(id);
-        model.addAttribute("customer", customer);
+        CustomerDto customerDto = new CustomerDto();
+        BeanUtils.copyProperties(customer.get(), customerDto);
+        model.addAttribute("customerDto", customerDto);
         return "customer/edit";
     }
 
     @PostMapping("/update")
-    public String update(Customer customer, RedirectAttributes redirectAttributes) {
+    public String update(@Validated CustomerDto customerDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("customerTypeList", iCustomerTypeService.findAll());
+            return "customer/edit";
+        }
+        Customer customer = new Customer();
+        BeanUtils.copyProperties(customerDto, customer);
         boolean check = iCustomerService.edit(customer);
         String mess = "Chỉnh sửa thành công.";
-        if(!check){
+        if (!check) {
             mess = "Chỉnh sửa không thành công(ID Card hoặc Phone Number hoặc Email đã tồn tại)";
         }
         redirectAttributes.addFlashAttribute("mess", mess);
         return "redirect:/customer";
     }
-
 }

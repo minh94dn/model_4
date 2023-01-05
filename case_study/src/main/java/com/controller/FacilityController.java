@@ -68,7 +68,7 @@ public class FacilityController {
 
     @PostMapping("update")
     public String update(Facility facility, RedirectAttributes redirectAttributes) {
-        boolean check = iFacilityService.add(facility);
+        boolean check = iFacilityService.edit(facility);
         String mess = "Chỉnh sửa thành công.";
         if(!check){
             mess = "Tên Facility này đã tồn tại, chỉnh sửa không thành công";

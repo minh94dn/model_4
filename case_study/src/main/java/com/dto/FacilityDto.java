@@ -1,2 +1,4 @@
-package com.dto;public class FacilityDto {
+package com.dto;
+
+public class FacilityDto {
 }

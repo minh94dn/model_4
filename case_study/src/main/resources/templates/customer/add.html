@@ -12,36 +12,42 @@
     <div class="col-md-3"></div>
     <div class="col-md-6" style="background: #e9f2ef">
         <h1 class="text-center">Add Customer</h1>
-        <form action="/customer/create" method="post" th:object="${customer}">
+        <form action="/customer/create" method="post" th:object="${customerDto}">
             <input type="hidden" th:field="*{id}">
             <div class="mb-3">
                 <label class="form-label fw-bold">Name Customer</label>
                 <input type="text" class="form-control" th:field="*{name}">
+                <p th:errors="*{name}" class="text-danger"></p>
             </div>
             <div class="mb-3">
                 <label class="form-label fw-bold">Date Of Birth</label>
                 <input type="date" class="form-control" th:field="*{dateOfBirth}">
+                <p th:errors="*{dateOfBirth}" class="text-danger"></p>
             </div>
             <div class="mb-3">
                 <label class="form-label fw-bold">Gender</label><br>
-                <label><input class="form-check-input" type="radio" name="gender" value="true" checked> Male</label>
-                <label><input class="form-check-input" type="radio" name="gender" value="false"> Female</label>
+                <label><input class=="form-check-input" type="radio" name="gender" value="true" checked> Male</label>
+                <label><input class=="form-check-input" type="radio" name="gender" value="false"> Female</label>
             </div>
             <div class="mb-3">
                 <label class="form-label fw-bold">ID Card</label>
                 <input type="text" class="form-control" th:field="*{idCard}">
+                <p th:errors="*{idCard}" class="text-danger"></p>
             </div>
             <div class="mb-3">
                 <label class="form-label fw-bold">Phone Number</label>
                 <input type="text" class="form-control" th:field="*{phoneNumber}">
+                <p th:errors="*{phoneNumber}" class="text-danger"></p>
             </div>
             <div class="mb-3">
                 <label class="form-label fw-bold">Email</label>
                 <input type="text" class="form-control" th:field="*{email}">
+                <p th:errors="*{email}" class="text-danger"></p>
             </div>
             <div class="mb-3">
                 <label class="form-label fw-bold">address</label>
                 <input type="text" class="form-control" th:field="*{address}">
+                <p th:errors="*{address}" class="text-danger"></p>
             </div>
             <div class="mb-3">
                 <label class="form-label fw-bold">Name Customer Type</label>

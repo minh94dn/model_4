@@ -37,10 +37,12 @@ public class CustomerService implements ICustomerService {
     @Override
     public boolean edit(Customer customer) {
         for (int i = 0; i < findAll().size(); i++) {
-            if (customer.getEmail().equals(findAll().get(i).getEmail()) ||
-                    customer.getIdCard().equals(findAll().get(i).getIdCard()) ||
-                    customer.getPhoneNumber().equals(findAll().get(i).getPhoneNumber())) {
-                return false;
+            if (customer.getId() != findAll().get(i).getId()) {
+                if ((customer.getEmail().equals(findAll().get(i).getEmail()) ||
+                        customer.getIdCard().equals(findAll().get(i).getIdCard()) ||
+                        customer.getPhoneNumber().equals(findAll().get(i).getPhoneNumber()))) {
+                    return false;
+                }
             }
         }
         iCustomerRepository.save(customer);
