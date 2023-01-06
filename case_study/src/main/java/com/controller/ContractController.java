@@ -46,7 +46,7 @@ public class ContractController {
     private IContractDetailService icontractDetailService;
 
     @GetMapping("")
-    public String showListContract(@PageableDefault(value = 5)Pageable pageable, Model model){
+    public String showListContract(@PageableDefault(value = 5) Pageable pageable, Model model) {
         Page<IContractDto> contractList = icontractService.listContract(pageable);
         model.addAttribute("contractList", contractList);
         model.addAttribute("contractDetail", new ContractDetail());
@@ -58,11 +58,18 @@ public class ContractController {
 
         return "contract/list";
     }
+
     @PostMapping("/createContractDetail")
-    public String createContractDetail(@ModelAttribute("contractDetail") ContractDetail contractDetail, RedirectAttributes redirectAttributes){
-       icontractDetailService.add(contractDetail);
-       redirectAttributes.addFlashAttribute("mess", "Thêm mới dịch vụ thành công.");
-       return "redirect:/contract";
+    public String createContractDetail(@ModelAttribute("contractDetail") ContractDetail contractDetail, RedirectAttributes redirectAttributes) {
+        icontractDetailService.add(contractDetail);
+        redirectAttributes.addFlashAttribute("mess", "Thêm mới dịch vụ thành công.");
+        return "redirect:/contract";
     }
- 
+
+    @PostMapping("/add")
+    public String create(Contract contract, RedirectAttributes redirectAttributes) {
+        icontractService.add(contract);
+        redirectAttributes.addFlashAttribute("mess", "Thêm mới hợp đồng thành công");
+        return "redirect:/contract";
+    }
 }

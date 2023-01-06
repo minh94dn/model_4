@@ -57,7 +57,7 @@
                 <h5 class="modal-title" id="exampleModalLabel3">Thêm mới hợp đồng</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form th:action="@{/contract/create}" method="post" th:object="${contract}">
+            <form th:action="@{/contract/add}" method="post" th:object="${contract}">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label th:for="startDay" class="form-label">Ngày làm hợp đồng</label>
