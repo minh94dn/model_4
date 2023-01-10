@@ -14,6 +14,8 @@ public class CustomerDto {
     @Pattern(regexp = "[a-zA-z ]+", message = "Tên không được nhập số và ký tự đặc biệt.")
     private String name;
     @NotBlank(message = "Ngày sinh không được để trống.")
+    @Pattern(regexp = "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[0-1])$",
+            message = "Ngày sinh phải đúng định dạng DD/MM/YYYY.")
     private String dateOfBirth;
     private boolean gender;
     @NotBlank(message = "Số CMND không được để trống.")

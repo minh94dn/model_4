@@ -55,7 +55,6 @@ public class ContractController {
         model.addAttribute("customerList", icustomerService.findAll());
         model.addAttribute("facilityList", ifacilityService.findAll());
         model.addAttribute("employeeList", iemployeeService.findAll());
-
         return "contract/list";
     }
 

@@ -1,17 +1,23 @@
 package com.controller;
 
+import com.dto.FacilityDto;
 import com.model.facility.Facility;
 import com.service.facility.IFacilityService;
 import com.service.facility.IFacilityTypeService;
 import com.service.facility.IRentTypeService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/facility")
@@ -41,17 +47,24 @@ public class FacilityController {
 
     @GetMapping("/add")
     public String showFromAdd(Model model) {
-        model.addAttribute("facility", new Facility());
+        model.addAttribute("facilityDto", new FacilityDto());
         model.addAttribute("facilityTypeList", iFacilityTypeService.findAll());
         model.addAttribute("rentTypeList", iRentTypeService.findAll());
         return "facility/add";
     }
 
     @PostMapping("create")
-    public String create(Facility facility, RedirectAttributes redirectAttributes) {
+    public String create(@Validated FacilityDto facilityDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("facilityTypeList", iFacilityTypeService.findAll());
+            model.addAttribute("rentTypeList", iRentTypeService.findAll());
+            return "facility/add";
+        }
+        Facility facility = new Facility();
+        BeanUtils.copyProperties(facilityDto, facility);
         boolean check = iFacilityService.add(facility);
         String mess = "Thêm mới thành công.";
-        if(!check){
+        if (!check) {
             mess = "Tên Facility này đã tồn tại, thêm mới không thành công";
         }
         redirectAttributes.addFlashAttribute("mess", mess);
@@ -59,10 +72,14 @@ public class FacilityController {
     }
 
     @GetMapping("/edit/{id}")
-    public String showFormEdit(@PathVariable("id") int id, Model model){
+    public String showFormEdit(@PathVariable("id") int id, Model model) {
         model.addAttribute("facility", iFacilityService.findById(id));
         model.addAttribute("facilityTypeList", iFacilityTypeService.findAll());
         model.addAttribute("rentTypeList", iRentTypeService.findAll());
+        Optional<Facility> facility = iFacilityService.findById(id);
+        FacilityDto facilityDto = new FacilityDto();
+        BeanUtils.copyProperties(facility.get(), facilityDto);
+        model.addAttribute(facilityDto);
         return "facility/edit";
     }
 
@@ -70,7 +87,7 @@ public class FacilityController {
     public String update(Facility facility, RedirectAttributes redirectAttributes) {
         boolean check = iFacilityService.edit(facility);
         String mess = "Chỉnh sửa thành công.";
-        if(!check){
+        if (!check) {
             mess = "Tên Facility này đã tồn tại, chỉnh sửa không thành công";
         }
         redirectAttributes.addFlashAttribute("mess", mess);

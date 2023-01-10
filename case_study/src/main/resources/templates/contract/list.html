@@ -15,7 +15,9 @@
 <h1 style="text-align: center; margin: 10px auto">List Contract</h1>
 <p th:text="${mess}" style="text-align: center; color: red; font-size: 25px"></p>
 <div class="col-lg-2">
-    <button class="btn btn-outline-primary" role="button" data-bs-toggle="modal" data-bs-target="#exampleModal3">Thêm mới</button>
+    <button class="btn btn-outline-primary" role="button" data-bs-toggle="modal" data-bs-target="#exampleModal3">Thêm
+        mới
+    </button>
 </div>
 <table class="table table-striped mt-3">
     <tr>
@@ -54,39 +56,42 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel3">Thêm mới hợp đồng</h5>
+                <h5 class="modal-title" id="exampleModalLabel3">Create Contract</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form th:action="@{/contract/add}" method="post" th:object="${contract}">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label th:for="startDay" class="form-label">Ngày làm hợp đồng</label>
-                        <input th:field ="*{startDate}" type="date" class="form-control width-form">
+                        <label th:for="startDate" class="form-label">Start Date</label>
+                        <input th:field="*{startDate}" type="date" class="form-control width-form">
                     </div>
                     <div class="mb-3">
-                        <label th:for="endDay" class="form-label">Ngày kết thúc</label>
-                        <input th:field ="*{endDate}"  type="date" class="form-control width-form">
+                        <label th:for="endDate" class="form-label">End Date</label>
+                        <input th:field="*{endDate}" type="date" class="form-control width-form">
                     </div>
                     <div class="mb-3">
-                        <label th:for="deposit" class="form-label">Tiền đặt cọc</label>
-                        <input th:field ="*{deposit}"  type="text" class="form-control width-form">
+                        <label th:for="deposit" class="form-label">Deposit</label>
+                        <input th:field="*{deposit}" type="text" class="form-control width-form">
                     </div>
                     <div class="mb-3">
-                        <label th:for="customer" class="form-label">Khách hàng</label>
-                        <select th:field ="*{customer}" >
-                            <option th:each="customer : ${customerList}" th:value="${customer.id}" th:text="${customer.name}"></option>
+                        <label th:for="customer" class="form-label">Customer</label>
+                        <select th:field="*{customer}">
+                            <option th:each="customer : ${customerList}" th:value="${customer.id}"
+                                    th:text="${customer.name}"></option>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label th:for="employee" class="form-label">Nhân viên</label>
-                        <select th:field ="*{employee}" >
-                            <option th:each="employee : ${employeeList}" th:value="${employee.id}" th:text="${employee.name}"></option>
+                        <label th:for="employee" class="form-label">Employee</label>
+                        <select th:field="*{employee}">
+                            <option th:each="employee : ${employeeList}" th:value="${employee.id}"
+                                    th:text="${employee.name}"></option>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label th:for="facility" class="form-label">Dịch vụ</label>
-                        <select th:field ="*{facility}" >
-                            <option th:each="facility : ${facilityList}" th:value="${facility.id}" th:text="${facility.name}"></option>
+                        <label th:for="facility" class="form-label">Facility</label>
+                        <select th:field="*{facility}">
+                            <option th:each="facility : ${facilityList}" th:value="${facility.id}"
+                                    th:text="${facility.name}"></option>
                         </select>
                     </div>
                 </div>
@@ -105,7 +110,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Create Attach Facility</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -116,7 +121,7 @@
                         <input type="text" class="form-control" id="idContract" th:field="*{contract}">
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputEmail7" class="form-label">Tên dịch vụ đi kèm</label>
+                        <label for="exampleInputEmail7" class="form-label">Attach Facility Name</label>
                         <select id="exampleInputEmail7" th:field="*{attachFacility}"
                                 class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
                             <option th:each="attachFacility:${attachFacilityList}"
@@ -125,12 +130,12 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputEmail11" class="form-label">Số lượng</label>
+                        <label for="exampleInputEmail11" class="form-label">Quantity</label>
                         <input type="number" min="1" class="form-control" id="exampleInputEmail11"
                                aria-describedby="emailHelp" th:field="*{quantity}">
                     </div>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Tạo hợp đồng</button>
+                    <button type="submit" class="btn btn-primary">Create Contract</button>
                 </form>
 
             </div>
@@ -142,7 +147,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Danh sách dịch vụ đi kèm</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">List Attach Facility</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -150,12 +155,12 @@
                     <thead>
                     <tr>
                         <th>Stt</th>
-                        <th>Tên dịch vụ</th>
-                        <th>Giá</th>
-                        <th>Đơn vị</th>
-                        <th>Trạng thái</th>
-                        <th>Số lượng</th>
-                        <th>Thành tiền</th>
+                        <th>Facility Name</th>
+                        <th>Cost</th>
+                        <th>Unit</th>
+                        <th>Status</th>
+                        <th>Quantity</th>
+                        <th>Sum Money</th>
                     </tr>
                     </thead>
                     <tbody id="myTableContractDetail">
@@ -213,9 +218,7 @@
                          </tr>
                              `
                 }
-                console.log(myTableContractDetail)
-                $("#myTableContractDetail").empty();
-                $("#myTableContractDetail").append(myTableContractDetail);
+                $("#myTableContractDetail").html(myTableContractDetail);
             }
         });
     }
