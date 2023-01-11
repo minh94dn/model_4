@@ -12,24 +12,50 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             -webkit-animation: aitf 80s linear infinite;
-            -webkit-transform: translate3d(0,0,0);
+            -webkit-transform: translate3d(0, 0, 0);
             -webkit-backface-visibility: hidden;
         }
+
         @-webkit-keyframes aitf {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
         }
     </style>
-    <nav class="navbar navbar-light" style="background: #addccf">
-        <div class="container">
-            <a class="navbar-brand" href="http://localhost:8080/">
-                <img src="https://furamavietnam.com/wp-content/uploads/2018/10/logo.png" alt="" width="90" height="100">
-            </a>
-            <b class="text-end">
-                Cao Đức Kim Minh
-            </b>
-        </div>
+    <nav class="navbar navbar-light row" style="background: #addccf">
+          <div class="col-11">
+              <div class="container justify-content-between">
+                  <div>
+                  <a class="navbar-brand" href="http://localhost:8080/">
+                      <img src="https://furamavietnam.com/wp-content/uploads/2018/10/logo.png" alt="" width="90"
+                           height="100">
+                  </a>
+                  </div>
+                  <div>
+                  <b class="text-end">
+                      Cao Đức Kim Minh
+                  </b>
+                  </div>
+              </div>
+          </div>
+          <div class="col-1">
+              <div class="content">
+                  <div>
+                      <a sec:authorize="isAnonymous()" href="/login" class="btn btn-outline-warning">Sign-in</a>
+                  </div>
+              </div>
+              <p sec:authorize="!isAnonymous()" th:text="${#authentication.getPrincipal().username}" style="color: aqua; text-align: center; font-size: 30px"></p>
+              <div class="content">
+                  <div class="justify-content-flex ">
+                      <a sec:authorize="!isAnonymous()" href="/logout" class="btn btn-outline-warning">Log-out</a>
+                  </div>
+              </div>
+          </div>
     </nav>
+
     <div class="row bg-success sticky-top container-fluid g-0">
         <div class="col-lg-3"></div>
         <div class="col-lg-6 d-flex justify-content-center">
@@ -98,7 +124,7 @@
 <!--background-->
 
 <style th:fragment="background">
-    body{
+    body {
         background-image: url("https://furamavietnam.com/wp-content/uploads/2018/08/BG2.jpg");
         background-position: right bottom;
         background-size: contain;

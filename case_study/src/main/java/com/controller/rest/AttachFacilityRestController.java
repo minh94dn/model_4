@@ -15,6 +15,7 @@ import java.util.List;
 public class AttachFacilityRestController {
     @Autowired
     private IContractService iContractService;
+
     @GetMapping("/showListAttachFacility/{id}")
     public ResponseEntity<List<IAttachFacilityDto>> getList(
             @PathVariable("id") int id) {

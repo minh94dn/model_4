@@ -31,8 +31,11 @@ public class Employee {
     @JoinColumn(name = "division_id", referencedColumnName = "id")
     private Division division;
 
+    private String user;
     @OneToMany(mappedBy = "employee")
     private Set<Contract> contracts;
+
+
 
     public int getId() {
         return id;
