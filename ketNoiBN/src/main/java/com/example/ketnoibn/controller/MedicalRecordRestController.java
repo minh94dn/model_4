@@ -27,6 +27,7 @@ public class MedicalRecordRestController {
         }
         return new ResponseEntity<>(medicalRecordList, HttpStatus.OK);
     }
+
     @Modifying
     @DeleteMapping("delete/{id}")
     public ResponseEntity<?> delete(@PathVariable int id) {
@@ -34,4 +35,10 @@ public class MedicalRecordRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Modifying
+    @PostMapping("")
+    public ResponseEntity<?> create(@RequestBody MedicalRecord medicalRecord) {
+        iMedicalRecordService.add(medicalRecord.getCode(), medicalRecord.getCodePatient(), medicalRecord.getNamePatient(), medicalRecord.getStartDate(), medicalRecord.getEndDate(), medicalRecord.getReason(), medicalRecord.getTreatments(), medicalRecord.getNameDoctors());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
